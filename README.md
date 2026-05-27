@@ -123,7 +123,7 @@
 
 所有影片皆改為：
 
-「臺灣料理做法」
+「臺灣影片料理做法」
 
 避免出現國外語言教學，
 更符合台灣使用者需求。
@@ -238,20 +238,3 @@ index.html
 提升整體視覺質感。
 
 ---
-
-# 🎓 專案用途
-
-本專案適合作為：
-
-- 大學前端作業
-- HTML/CSS/JS 展示作品
-- GitHub Portfolio
-- UI/UX 練習作品
-- 互動式網站展示
-
----
-
-# 👨‍💻 作者
-
-Interactive Global Cuisine Experience  
-Developed with HTML / CSS / JavaScript
