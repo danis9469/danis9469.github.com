@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>全球互動式異國料理食譜</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Noto Sans TC',sans-serif;
+background:#050505;
+color:white;
+overflow-x:hidden;
+}
+
+/* HERO */
+
+.hero{
+height:75vh;
+background:
+linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.7)),
+url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+.hero-content h1{
+font-size:68px;
+font-weight:900;
+margin-bottom:20px;
+letter-spacing:4px;
+}
+
+.hero-content p{
+font-size:24px;
+opacity:.9;
+line-height:1.8;
+}
+
+/* COUNTRY SELECT */
+
+.selector{
+padding:50px 5%;
+background:#0f0f0f;
+}
+
+.selector h2{
+font-size:42px;
+margin-bottom:35px;
+text-align:center;
+font-weight:900;
+}
+
+.country-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+gap:20px;
+}
+
+.country-btn{
+background:#1b1b1b;
+border:2px solid #2f2f2f;
+border-radius:22px;
+padding:24px 10px;
+cursor:pointer;
+transition:.35s;
+text-align:center;
+}
+
+.country-btn:hover{
+transform:translateY(-6px);
+background:#242424;
+border-color:#ff7043;
+}
+
+.flag{
+font-size:52px;
+margin-bottom:12px;
+}
+
+.country-name{
+font-size:24px;
+font-weight:800;
+}
+
+/* CONTENT */
+
+.content{
+padding:50px 5%;
+display:none;
+animation:fade .5s ease;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(25px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.content-title{
+font-size:54px;
+font-weight:900;
+margin-bottom:35px;
+text-align:center;
+}
+
+.food-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+gap:35px;
+}
+
+.card{
+background:#131313;
+border-radius:28px;
+overflow:hidden;
+box-shadow:0 12px 35px rgba(0,0,0,.45);
+transition:.35s;
+position:relative;
+}
+
+.card:hover{
+transform:translateY(-8px) scale(1.01);
+}
+
+.card img{
+width:100%;
+height:260px;
+object-fit:cover;
+background:#222;
+}
+
+.badge{
+position:absolute;
+top:15px;
+left:15px;
+background:#ff5722;
+padding:10px 16px;
+border-radius:50px;
+font-size:13px;
+font-weight:800;
+z-index:2;
+}
+
+.card-content{
+padding:24px;
+}
+
+.card-content h3{
+font-size:34px;
+margin-bottom:15px;
+font-weight:900;
+}
+
+.card-content p{
+line-height:1.9;
+opacity:.92;
+margin-bottom:20px;
+font-size:16px;
+}
+
+.info{
+background:#1f1f1f;
+padding:18px;
+border-radius:18px;
+line-height:2;
+margin-bottom:20px;
+font-size:15px;
+}
+
+.recipe{
+background:#202020;
+padding:18px;
+border-radius:18px;
+line-height:2;
+margin-bottom:20px;
+}
+
+.recipe h4{
+margin-bottom:12px;
+font-size:22px;
+color:#ffb199;
+}
+
+.recipe ol{
+padding-left:22px;
+}
+
+.recipe li{
+margin-bottom:8px;
+}
+
+.video-btn{
+display:inline-block;
+width:100%;
+text-align:center;
+padding:18px;
+background:linear-gradient(90deg,#ff5722,#ff9800);
+border-radius:16px;
+text-decoration:none;
+color:white;
+font-weight:900;
+font-size:18px;
+transition:.3s;
+}
+
+.video-btn:hover{
+transform:scale(1.03);
+opacity:.92;
+}
+
+.footer{
+padding:40px;
+text-align:center;
+background:#0b0b0b;
+opacity:.8;
+margin-top:40px;
+line-height:2;
+}
+
+@media(max-width:768px){
+
+.hero-content h1{
+font-size:42px;
+}
+
+.hero-content p{
+font-size:18px;
+}
+
+.content-title{
+font-size:38px;
+}
+
+.card-content h3{
+font-size:28px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>全球互動式異國料理食譜</h1>
+
+<p>
+請問你喜歡吃什麼樣的料理呢？<br>
+點選國旗，探索不同國家的經典美食與臺灣版料理教學。
+</p>
+
+</div>
+
+</section>
+
+<!-- SELECTOR -->
+
+<section class="selector">
+
+<h2>請選擇你想吃的國家料理</h2>
+
+<div class="country-grid">
+
+<div class="country-btn" onclick="showCountry('japan')">
+<div class="flag">🇯🇵</div>
+<div class="country-name">日本</div>
+</div>
+
+<div class="country-btn" onclick="showCountry('korea')">
+<div class="flag">🇰🇷</div>
+<div class="country-name">韓國</div>
+</div>
+
+<div class="country-btn" onclick="showCountry('italy')">
+<div class="flag">🇮🇹</div>
+<div class="country-name">義大利</div>
+</div>
+
+<div class="country-btn" onclick="showCountry('taiwan')">
+<div class="flag">🇹🇼</div>
+<div class="country-name">台灣</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- JAPAN -->
+
+<section class="content" id="japan">
+
+<h2 class="content-title">🇯🇵 日本料理</h2>
+
+<div class="food-grid">
+
+<!-- 唐揚炸雞 -->
+
+<div class="card">
+
+<div class="badge">日本人氣</div>
+
+<img src="https://images.unsplash.com/photo-1608039755401-742074f0548d?q=80&w=1400&auto=format&fit=crop">
+
+<div class="card-content">
+
+<h3>日式唐揚炸雞</h3>
+
+<p>
+日本居酒屋經典人氣料理，
+使用醬油、蒜頭與薑汁醃製雞肉，
+外皮酥脆、內部多汁。
+</p>
+
+<div class="info">
+
+🍽 重量：約 420g<br>
+🔥 熱量：約 780 kcal<br>
+🏃 消耗方式：約慢跑 88 分鐘
+
+</div>
+
+<div class="recipe">
+
+<h4>臺灣版做法</h4>
+
+<ol>
+<li>雞腿肉切塊醃製 30 分鐘。</li>
+<li>加入醬油、蒜末與薑泥。</li>
+<li>裹上太白粉。</li>
+<li>炸至金黃酥脆即可。</li>
+</ol>
+
+</div>
+
+<a class="video-btn"
+href="https://www.youtube.com/results?search_query=台灣+唐揚炸雞+做法"
+target="_blank">
+▶ 觀看臺灣料理教學
+</a>
+
+</div>
+</div>
+
+<!-- 拉麵 -->
+
+<div class="card">
+
+<div class="badge">濃厚系</div>
+
+<img src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?q=80&w=1400&auto=format&fit=crop">
+
+<div class="card-content">
+
+<h3>豚骨拉麵</h3>
+
+<p>
+濃厚豚骨高湯搭配叉燒與半熟蛋，
+是日本最受歡迎的國民料理之一。
+</p>
+
+<div class="info">
+
+🍽 重量：約 560g<br>
+🔥 熱量：約 850 kcal<br>
+🏃 消耗方式：約跑步 95 分鐘
+
+</div>
+
+<div class="recipe">
+
+<h4>臺灣版做法</h4>
+
+<ol>
+<li>豬骨熬煮 6 小時。</li>
+<li>加入醬油與蒜油調味。</li>
+<li>煮熟拉麵後放入湯中。</li>
+<li>擺上叉燒、木耳與糖心蛋。</li>
+</ol>
+
+</div>
+
+<a class="video-btn"
+href="https://www.youtube.com/results?search_query=台灣+豚骨拉麵+做法"
+target="_blank">
+▶ 觀看臺灣料理教學
+</a>
+
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- KOREA -->
+
+<section class="content" id="korea">
+
+<h2 class="content-title">🇰🇷 韓國料理</h2>
+
+<div class="food-grid">
+
+<!-- 石鍋拌飯 -->
+
+<div class="card">
+
+<div class="badge">韓國必吃</div>
+
+<img src="https://images.unsplash.com/photo-1553163147-622ab57be1c7?q=80&w=1400&auto=format&fit=crop">
+
+<div class="card-content">
+
+<h3>石鍋拌飯</h3>
+
+<p>
+韓式經典料理，
+搭配蔬菜、辣醬與鍋巴，
+香氣與口感層次豐富。
+</p>
+
+<div class="info">
+
+🍽 重量：約 480g<br>
+🔥 熱量：約 760 kcal<br>
+🏃 消耗方式：約慢跑 85 分鐘
+
+</div>
+
+<div class="recipe">
+
+<h4>臺灣版做法</h4>
+
+<ol>
+<li>準備韓式辣醬。</li>
+<li>蔬菜分別炒熟。</li>
+<li>石鍋加熱後放入白飯。</li>
+<li>加入蛋與配料拌勻。</li>
+</ol>
+
+</div>
+
+<a class="video-btn"
+href="https://www.youtube.com/results?search_query=台灣+石鍋拌飯+做法"
+target="_blank">
+▶ 觀看臺灣料理教學
+</a>
+
+</div>
+</div>
+
+<!-- 韓式炸雞 -->
+
+<div class="card">
+
+<div class="badge">超人氣</div>
+
+<img src="https://images.unsplash.com/photo-1562967914-608f82629710?q=80&w=1400&auto=format&fit=crop">
+
+<div class="card-content">
+
+<h3>韓式炸雞</h3>
+
+<p>
+韓國最熱門的街頭料理之一，
+炸雞外酥內嫩，
+搭配韓式甜辣醬十分過癮。
+</p>
+
+<div class="info">
+
+🍽 重量：約 450g<br>
+🔥 熱量：約 920 kcal<br>
+🏃 消耗方式：約跑步 105 分鐘
+
+</div>
+
+<div class="recipe">
+
+<h4>臺灣版做法</h4>
+
+<ol>
+<li>雞腿肉加入蒜頭與胡椒醃製。</li>
+<li>裹上炸粉後高溫油炸。</li>
+<li>韓式辣醬加蜂蜜調味。</li>
+<li>炸雞拌入醬汁即可。</li>
+</ol>
+
+</div>
+
+<a class="video-btn"
+href="https://www.youtube.com/results?search_query=台灣+韓式炸雞+做法"
+target="_blank">
+▶ 觀看臺灣料理教學
+</a>
+
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- ITALY -->
+
+<section class="content" id="italy">
+
+<h2 class="content-title">🇮🇹 義大利料理</h2>
+
+<div class="food-grid">
+
+<!-- 披薩 -->
+
+<div class="card">
+
+<div class="badge">義式經典</div>
+
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1400&auto=format&fit=crop">
+
+<div class="card-content">
+
+<h3>瑪格麗特披薩</h3>
+
+<p>
+義大利拿坡里經典披薩，
+使用番茄、羅勒與莫札瑞拉起司，
+口感濃郁且香氣十足。
+</p>
+
+<div class="info">
+
+🍽 重量：約 520g<br>
+🔥 熱量：約 980 kcal<br>
+🏃 消耗方式：約跑步 110 分鐘
+
+</div>
+
+<div class="recipe">
+
+<h4>臺灣版做法</h4>
+
+<ol>
+<li>製作手工披薩麵團。</li>
+<li>抹上番茄醬。</li>
+<li>鋪上起司與番茄。</li>
+<li>高溫烘烤至金黃。</li>
+</ol>
+
+</div>
+
+<a class="video-btn"
+href="https://www.youtube.com/results?search_query=台灣+披薩+做法"
+target="_blank">
+▶ 觀看臺灣料理教學
+</a>
+
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- TAIWAN -->
+
+<section class="content" id="taiwan">
+
+<h2 class="content-title">🇹🇼 台灣料理</h2>
+
+<div class="food-grid">
+
+<!-- 牛肉麵 -->
+
+<div class="card">
+
+<div class="badge">台灣經典</div>
+
+<img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=1400&auto=format&fit=crop">
+
+<div class="card-content">
+
+<h3>紅燒牛肉麵</h3>
+
+<p>
+台灣最具代表性的國民料理之一，
+濃郁紅燒湯頭搭配牛腱與Q彈麵條。
+</p>
+
+<div class="info">
+
+🍽 重量：約 650g<br>
+🔥 熱量：約 880 kcal<br>
+🏃 消耗方式：約跑步 100 分鐘
+
+</div>
+
+<div class="recipe">
+
+<h4>臺灣版做法</h4>
+
+<ol>
+<li>牛腱川燙後炒香。</li>
+<li>加入豆瓣醬與醬油。</li>
+<li>熬煮高湯 2 小時。</li>
+<li>搭配麵條與酸菜享用。</li>
+</ol>
+
+</div>
+
+<a class="video-btn"
+href="https://www.youtube.com/results?search_query=台灣+牛肉麵+做法"
+target="_blank">
+▶ 觀看臺灣料理教學
+</a>
+
+</div>
+</div>
+
+<!-- 小籠包 -->
+
+<div class="card">
+
+<div class="badge">湯汁爆滿</div>
+
+<img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=1400&auto=format&fit=crop">
+
+<div class="card-content">
+
+<h3>小籠包</h3>
+
+<p>
+皮薄湯多的經典台灣點心，
+內餡包含豬肉與高湯凍，
+蒸熟後湯汁濃郁。
+</p>
+
+<div class="info">
+
+🍽 重量：約 320g<br>
+🔥 熱量：約 540 kcal<br>
+🏃 消耗方式：約快走 65 分鐘
+
+</div>
+
+<div class="recipe">
+
+<h4>臺灣版做法</h4>
+
+<ol>
+<li>製作高湯凍。</li>
+<li>豬肉加入薑末調味。</li>
+<li>包入麵皮後收口。</li>
+<li>蒸 8 分鐘即可。</li>
+</ol>
+
+</div>
+
+<a class="video-btn"
+href="https://www.youtube.com/results?search_query=台灣+小籠包+做法"
+target="_blank">
+▶ 觀看臺灣料理教學
+</a>
+
+</div>
+</div>
+
+</div>
+
+</section>
+
+<footer class="footer">
+
+全球異國料理互動食譜系統<br>
+Interactive Global Brunch Experience
+
+</footer>
+
+<script>
+
+function showCountry(id){
+
+const sections = document.querySelectorAll('.content');
+
+sections.forEach(section=>{
+section.style.display='none';
+});
+
+document.getElementById(id).style.display='block';
+
+window.scrollTo({
+top:document.getElementById(id).offsetTop - 40,
+behavior:'smooth'
+});
+
+}
+
+</script>
+
+</body>
+</html>
